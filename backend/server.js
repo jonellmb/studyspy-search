@@ -21,12 +21,13 @@ connection.once('open', () => {
 
 const courseRouter = require('./routes/course');
 const providerRouter = require('./routes/provider');
+const providerRouter2 = require('./routes/provider.photo.route');
 
 //routes middleware
 
 app.use('/course', courseRouter);
 app.use('/provider', providerRouter);
-
+app.use('/provider', providerRouter2);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

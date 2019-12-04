@@ -4,6 +4,7 @@ let Course = require('../models/course.model');
 router.route('/').get((req, res) => {
     //return all courses and including sorting,ordering and limiting
     //by level = /course?sortBy=level&order=desc&limit=4
+    
     let order = req.query.order ? req.query.order : "asc";
     let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
@@ -16,7 +17,7 @@ router.route('/').get((req, res) => {
       .then(course => res.json(course))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-
+//create product
   router.route('/create').post((req, res) => {
     const newCoursename = new Course(req.body);
   
@@ -24,6 +25,7 @@ router.route('/').get((req, res) => {
       .then(() => res.json('Course added!'))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  //find by ID
   router.route('/:id').get((req, res) => {
     Course.findById(req.params.id)
       .then(course => res.json(course))
@@ -31,7 +33,7 @@ router.route('/').get((req, res) => {
   });
 
 
-  
+  //search
   router.route('/by/search').post((req, res) => {
 
     let order = req.body.order ? req.body.order : "desc";
@@ -46,7 +48,7 @@ router.route('/').get((req, res) => {
     for (let key in req.body.filters) {
         if (req.body.filters[key].length > 0) {
             if (key === "d_tuitionfee") {
-                // gte -  greater than price [0-10]
+                // gte -  greater than tuition [0-10]
                 // lte - less than
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
@@ -54,7 +56,7 @@ router.route('/').get((req, res) => {
                 };
             }
             if (key === "i_tuitionfee") {
-                // gte -  greater than price [0-10]
+                // gte -  greater than tuition [0-10]
                 // lte - less than
                 findArgs[key] = {
                     $gte: req.body.filters[key][0],
@@ -66,7 +68,6 @@ router.route('/').get((req, res) => {
             }
         }
     }
-
     Course.find(findArgs)
         .select("-photo")
         .populate("provider")
@@ -85,6 +86,34 @@ router.route('/').get((req, res) => {
             });
         });
         
+  });
+
+  //delete course
+  router.route('/:id').delete((req, res) => {
+    Course.findByIdAndDelete(req.params.id)
+      .then(() => res.json('Course deleted.'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  //update course
+  router.route('/update/:id').post((req, res) => {
+    Course.findById(req.params.id)
+      .then(course => {
+        
+        course.coursename = req.body.coursename;
+        course.cdescription = req.body.cdescription;
+        course.entryreq = req.body.entryreq;
+        course.level = req.body.level;
+        course.duration = req.body.duration;
+        course.d_tuitionfee = Number(req.body.d_tuitionfee);
+        course.i_tuitionfee = Number(req.body.i_tuitionfee);
+        course.provider = req.body.provider;
+  
+        course.save()
+          .then(() => res.json('Course updated!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
   });
 
 module.exports = router;
