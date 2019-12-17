@@ -12,12 +12,13 @@ router.route('/').get((req, res) => {
     Course.find()
     .select("-photo")
     .populate("provider")
+    .populate("duration")
     .sort([[sortBy, order]])
     .limit(limit)   
       .then(course => res.json(course))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-//create product
+//create course
   router.route('/create').post((req, res) => {
     const newCoursename = new Course(req.body);
   
@@ -71,6 +72,7 @@ router.route('/').get((req, res) => {
     Course.find(findArgs)
         .select("-photo")
         .populate("provider")
+        .populate("duration")
         .sort([[sortBy, order]])
         .skip(skip)
         .limit(limit)

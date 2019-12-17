@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ShowImage from "./ShowImage";
 import EllipsisText from "react-ellipsis-text";
 import NumberFormat from 'react-number-format';
-
+// {course.duration.durationname != null?  <text>Duration: {course.duration.id}<br /></text>: null }  
 
 const Card = ({ course }) => {
 
@@ -18,14 +18,14 @@ const Card = ({ course }) => {
                 {course.provider.providertype != null?  <text>{course.provider.providertype}<br /></text>: null }  
                 </p>
                  <p>
-                 {course.duration != null?  <text>Duration: {course.duration}<br /></text>: null }          
+             
                     {course.d_tuitionfee != null?  <text><NumberFormat value={course.d_tuitionfee} displayType={'text'} thousandSeparator={true} prefix={'Domestic Tuition: $'} /><br /></text>: null }
                     {course.i_tuitionfee != null?  <text><NumberFormat value={course.i_tuitionfee} displayType={'text'} thousandSeparator={true} prefix={'International Tuition: $'} /><br /></text>: null }  
                     {course.level != null?  <text>NZQF Level: {course.level}<br /></text>: null }
                  </p>
                  
                     <p>
-                    <EllipsisText text={course.cdescription} length={"361"} />                  
+                    <EllipsisText text={course.cdescription.substring(0,120)} length={"361"} />...                  
                     </p>
 
                     <Link to="/">

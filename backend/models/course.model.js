@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema({
   cdescription: { type: String,trim: true},
   entryreq: { type: String,trim: true},
   level: { type: Number},
-  duration: { type: String,trim: true},
+  duration: { type: ObjectId, ref: 'Duration'},
   d_tuitionfee: { type: Number,trim: true },
   i_tuitionfee: { type: Number,trim: true },
   provider: {  type: ObjectId, ref: 'Provider'}

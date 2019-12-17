@@ -26,16 +26,17 @@ const Home = () =>
     return(
 <Layout 
     title="New Zealand's Digital Prospectus" 
-    description="StudySpy helps you find your future – compare every course and scholarship in New Zealand, from Kaitaia to Invercargill."
+    description="StudySpy helps you find your future – compare every course and scholarship in New Zealand,
+    from Kaitaia to Invercargill."
     className="container-fluid"
 >    
 <h2 className="mb-4">courses</h2>
             <div className="row">
-         
+
                 {productsByArrival.map((course, i) => (
                     <Card key={i} course={course} />
                 ))}
-              
+               
             </div>
 
 

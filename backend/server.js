@@ -18,6 +18,7 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
+const durationRouter = require('./routes/duration');
 
 const courseRouter = require('./routes/course');
 const providerRouter = require('./routes/provider');
@@ -26,6 +27,8 @@ const providerRouter2 = require('./routes/provider.photo.route');
 //routes middleware
 
 app.use('/course', courseRouter);
+app.use('/duration', durationRouter);
+
 app.use('/provider', providerRouter);
 app.use('/provider', providerRouter2);
 
